@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:state_with_bloc/bloc/internet_bloc/internet_bloc.dart';
-import 'package:state_with_bloc/bloc/internet_bloc/internet_state.dart';
+import 'cubit/internet_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,19 +12,33 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(
-      child: Center(
-        child:
-        BlocBuilder<InternetBloc, InternetState>(builder: (context, state) {
-          if (state is InternetGainedState) {
-            return const Text("Connected!");
-          } else if (state is InternetLostState) {
-            return const Text("Not connected!");
-          } else {
-            return const Text("Loading...");
-          }
-        }),
-      ),
-    ));
+    return Scaffold(
+        body: SafeArea(
+          child: Center(
+              child: BlocConsumer<InternetCubit, InternetState>(
+                builder: (context, state) {
+                  if (state == InternetState.gained) {
+                    return const Text("Internet Connected!");
+                  } else if (state == InternetState.lost) {
+                    return const Text("Internet Not Connected");
+                  } else {
+                    return const Text("Loading....");
+                  }
+                },
+                listener: (BuildContext context, state) {
+                  if (state == InternetState.gained) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Connected"),
+                      backgroundColor: Colors.green,
+                    ));
+                  } else if (state == InternetState.lost) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Not Connected"),
+                      backgroundColor: Colors.red,
+                    ));
+                  }
+                },
+              )),
+        ));
   }
 }
