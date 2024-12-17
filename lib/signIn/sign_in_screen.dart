@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:connectivity_with_bloc/signIn/bloc/sign_in_bloc.dart';
-import 'package:connectivity_with_bloc/signIn/bloc/sign_in_event.dart';
-import 'package:connectivity_with_bloc/signIn/bloc/sign_in_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/sign_in_bloc.dart';
+import 'bloc/sign_in_event.dart';
+import 'bloc/sign_in_state.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -28,13 +28,13 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Sign-In Screen",
         ),
         centerTitle: true,
       ),
       body: Padding(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           child: Column(
             spacing: 20,
             children: [
@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       SignInTextChangedEvent(
                           emailController.text, passwordController.text));
                 },
-                decoration: InputDecoration(hintText: "Email"),
+                decoration: const InputDecoration(hintText: "Email"),
               ),
               TextField(
                 controller: passwordController,
@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       SignInTextChangedEvent(
                           emailController.text, passwordController.text));
                 },
-                decoration: InputDecoration(hintText: "Password"),
+                decoration: const InputDecoration(hintText: "Password"),
               ),
               BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
                 return SizedBox(
@@ -81,13 +81,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                 height: 26,
                                 width: 26,
                                 child: Platform.isAndroid
-                                    ? CircularProgressIndicator(
+                                    ? const CircularProgressIndicator(
                                         color: Colors.black,
                                       )
-                                    : CupertinoActivityIndicator(
+                                    : const CupertinoActivityIndicator(
                                         color: Colors.black)),
                           )
-                        : Text(
+                        : const Text(
                             "Sign-in",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
